@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
+Route::get('email', 'EmailController@getForm');
+Route::get('email_ok', 'EmailController@postForm');
+
+Route::resource('post', 'PostController', ['except' => ['show', 'edit', 'update']]);

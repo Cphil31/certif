@@ -17,4 +17,6 @@ Route::get('/', function () {
 Route::get('email', 'EmailController@getForm');
 Route::get('email_ok', 'EmailController@postForm');
 
+
 Route::resource('post', 'PostController', ['except' => ['show', 'edit', 'update']]);
+Route::resource('user', 'UserController');

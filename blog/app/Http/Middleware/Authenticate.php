@@ -3,16 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class Authenticate
 {
-       /**
-     * The Guard implementation.
-     *
-     * @var Guard
-     */
-       protected $auth;
+    protected $auth;
 
     /**
      * Create a new filter instance.
@@ -34,8 +28,12 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            return redirect('/home');
+        if ($this->auth->guest()) {
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect()->guest('auth/login');
+            }
         }
 
         return $next($request);
